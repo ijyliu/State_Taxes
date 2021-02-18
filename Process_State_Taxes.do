@@ -1,6 +1,6 @@
-*Process_State_Local_Taxes.do
+*Process_State_Taxes.do
 
-*Process State and Local Tax Files
+*Process State Tax Files
 
 *Also includes adjusted tax rates based on further investigation
 
@@ -9,16 +9,11 @@
 
 ********************************************************************************
 
-*Import paths globals
-do "../../../Prelim.do"
-
-********************************************************************************
-
 *Corporate
 
 forvalues year = 2010/2020 {
 
-    import excel "${Input}/State Data/State_Tax_Data/Corporate/state_corporate_income_tax_3.xlsx", sheet("`year'") case(preserve) clear
+    import excel "Input/Corporate/state_corporate_income_tax_3.xlsx", sheet("`year'") case(preserve) clear
 	
     if `year' == 2018 {
         rename B A
@@ -36,7 +31,7 @@ forvalues year = 2010/2020 {
 
     drop if missing(State)
 
-    merge 1:1 State using "${Input}/State Data/State_Tax_Data/State_Names", keepusing(State)
+    merge 1:1 State using "Input/State_Names", keepusing(State)
     keep if _m == 2 | _m == 3
     drop _m
 	
@@ -67,7 +62,7 @@ forvalues year = 2010/2020 {
 
     compress
 	
-    save "${Input}/State Data/State_Tax_Data/Corporate/Corp_Clean_`year'", replace
+    save "Input/Corporate/Corp_Clean_`year'", replace
 
 }
 
@@ -75,7 +70,7 @@ clear
 
 forvalues year = 2010/2020 {
 
-    append using "${Input}/State Data/State_Tax_Data/Corporate/Corp_Clean_`year'"
+    append using "Input/Corporate/Corp_Clean_`year'"
 
 }
 
@@ -189,12 +184,12 @@ replace Corp_Rate_Adj = Corp_Rate + 1.5 if State == "New Jersey" & year == 2020
 
 ********************************************************************************
 
-save "${Input}/State Data/State_Tax_Data/Corporate/Corp_Clean", replace
+save "Input/Corporate/Corp_Clean", replace
 
 ********************************************************************************
 
 *Personal
-import excel "${Input}/State Data/State_Tax_Data/Personal/NBER State Income Rates Recent.xlsx", clear firstrow
+import excel "Input/Personal/NBER State Income Rates Recent.xlsx", clear firstrow
 
 des
 
@@ -204,7 +199,7 @@ drop StateID*
 rename StateName State
 replace State = "District of Columbia" if State == "Washington DC"
 
-merge m:1 State using "${Input}/State Data/State_Tax_Data/State_Names", keepusing(State)
+merge m:1 State using "Input/State_Names", keepusing(State)
 keep if _m == 3
 drop _m
 
@@ -260,14 +255,14 @@ replace Pers_Rate = Pers_Rate + 1.33 if State == "Nebraska" & (year >= 2010 & ye
 
 ********************************************************************************
 
-save "${Input}/State Data/State_Tax_Data/Personal/NBER_Clean", replace
+save "Input/Personal/NBER_Clean", replace
 
 clear
 
 *Prep Tax Foundation 2010 to 2014 excel files
 forvalues year = 2010/2014 {
 
-    import excel "${Input}/State Data/State_Tax_Data/Personal/State-Individual-Income-Tax-Rates-2000-2014.xlsx", clear sheet("`year'") case(preserve)
+    import excel "Input/Personal/State-Individual-Income-Tax-Rates-2000-2014.xlsx", clear sheet("`year'") case(preserve)
 	
 	des
 	
@@ -328,7 +323,7 @@ forvalues year = 2010/2014 {
 	replace `convention' = stritrim(`convention')
 	replace `convention' = strtrim(`convention')
 	
-    merge 1:1 `convention' using "${Input}/State Data/State_Tax_Data/State_Names", keepusing(State)	
+    merge 1:1 `convention' using "Input/State_Names", keepusing(State)	
 	keep if _m == 2 | _m == 3
 	drop _m `convention'
 	
@@ -375,7 +370,7 @@ forvalues year = 2010/2014 {
 	
 	********************************************************************************
 	
-    save "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean_`year'", replace
+    save "Input/Personal/Pers_Clean_`year'", replace
 
 }
 
@@ -384,7 +379,7 @@ clear
 *Prep Tax Foundation 2015 to 2020 excel files for comparison with NBER, though we will only use 2019-2020 (after NBER stops)
 forvalues year = 2015/2020 {
 
-    import excel "${Input}/State Data/State_Tax_Data/Personal/State-Individual-Income-Tax-Rates-and-Brackets-for-2020-U.xlsx", clear sheet("`year'") case(preserve)
+    import excel "Input/Personal/State-Individual-Income-Tax-Rates-and-Brackets-for-2020-U.xlsx", clear sheet("`year'") case(preserve)
 
 	des
 	
@@ -428,7 +423,7 @@ forvalues year = 2015/2020 {
 	replace TF_Abb_Short = strtrim(TF_Abb_Short)
 	replace TF_Abb_Short = strtrim(TF_Abb_Short)
 	
-    merge 1:1 TF_Abb_Short using "${Input}/State Data/State_Tax_Data/State_Names", keepusing(State)
+    merge 1:1 TF_Abb_Short using "Input/State_Names", keepusing(State)
 	
 	keep if _m == 2 | _m == 3
 	drop _m TF_Abb_Short
@@ -464,7 +459,7 @@ forvalues year = 2015/2020 {
 	
 	********************************************************************************
 	
-    save "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean_`year'", replace
+    save "Input/Personal/Pers_Clean_`year'", replace
 
 }
 
@@ -472,7 +467,7 @@ clear
 
 forvalues year = 2019/2020 {
 
-    append using "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean_`year'"
+    append using "Input/Personal/Pers_Clean_`year'"
 
     replace year = `year' if missing(year)
 
@@ -487,11 +482,11 @@ drop State_f
 *For the baseline estimate, missing values do actually represent no personal income tax
 replace Pers_Rate = 0 if missing(Pers_Rate)
 
-save "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean_Tax_Foundation", replace
+save "Input/Personal/Pers_Clean_Tax_Foundation", replace
 
 *append NBER and Tax Foundation data together
-use "${Input}/State Data/State_Tax_Data/Personal/NBER_Clean", clear
-append using "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean_Tax_Foundation" //, gen(dataset)
+use "Input/Personal/NBER_Clean", clear
+append using "Input/Personal/Pers_Clean_Tax_Foundation" //, gen(dataset)
 
 ********************************************************************************
 
@@ -543,7 +538,7 @@ replace Pers_Rate = 0 if missing(Pers_Rate)
 
 ********************************************************************************
 
-save "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean", replace
+save "Input/Personal/Pers_Clean", replace
 
 ********************************************************************************
 
@@ -553,7 +548,7 @@ clear
 
 forvalues year = 2010/2020 {
 
-    append using "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean_`year'"
+    append using "Input/Personal/Pers_Clean_`year'"
 
     replace year = `year' if missing(year)
 
@@ -561,16 +556,16 @@ forvalues year = 2010/2020 {
 
 rename Pers_Rate Pers_Rate_Adj
 
-save "${Input}/State Data/State_Tax_Data/Personal/Fully_TF_Pers_Clean_2010_to_2020", replace
+save "Input/Personal/Fully_TF_Pers_Clean_2010_to_2020", replace
 
 ********************************************************************************
 
-use "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean", clear
+use "Input/Personal/Pers_Clean", clear
 
-merge 1:1 State year using "${Input}/State Data/State_Tax_Data/Personal/Fully_TF_Pers_Clean_2010_to_2020"
+merge 1:1 State year using "Input/Personal/Fully_TF_Pers_Clean_2010_to_2020"
 drop _m
 
-save "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean", replace
+save "Input/Personal/Pers_Clean", replace
 
 ********************************************************************************
 
@@ -579,7 +574,7 @@ save "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean", replace
 *Tax foundation sheets 2010-2014
 forvalues year = 2010/2014 {
 
-    import excel "${Input}/State Data/State_Tax_Data/Sales/State Sales, Gasoline, Cigarette and Alcohol Taxes, 2000-2014.xlsx", clear sheet("`year'")
+    import excel "Input/Sales/State Sales, Gasoline, Cigarette and Alcohol Taxes, 2000-2014.xlsx", clear sheet("`year'")
 
     keep A B
 
@@ -590,7 +585,7 @@ forvalues year = 2010/2014 {
 	
 	drop if missing(TF_Abb_Long)
 	
-    merge 1:1 TF_Abb_Long using "${Input}/State Data/State_Tax_Data/State_Names", keepusing(State)
+    merge 1:1 TF_Abb_Long using "Input/State_Names", keepusing(State)
     keep if _m == 2 | _m == 3
     drop _m TF_Abb_Long
 
@@ -607,14 +602,14 @@ forvalues year = 2010/2014 {
 
 	gen year = `year'
 	
-    save "${Input}/State Data/State_Tax_Data/Sales/Sales_Clean_`year'", replace
+    save "Input/Sales/Sales_Clean_`year'", replace
 
 }
 
 * Tax foundation individual files 2015-2020
 forvalues year = 2015/2020 {
 
-    import excel "${Input}/State Data/State_Tax_Data/Sales/Tax_Foundation_`year'_Sales.xlsx", clear
+    import excel "Input/Sales/Tax_Foundation_`year'_Sales.xlsx", clear
 	
     keep A B
 
@@ -648,20 +643,20 @@ forvalues year = 2015/2020 {
     rename A `convention'
     rename B Sales_Rate
 	
-    merge 1:1 `convention' using "${Input}/State Data/State_Tax_Data/State_Names", keepusing(State)
+    merge 1:1 `convention' using "Input/State_Names", keepusing(State)
 	cap drop State_w_DC_Abb
 	cap drop TF_Abb_Short
 	keep if _m == 3
     drop _m
 	
-    save "${Input}/State Data/State_Tax_Data/Sales/Sales_Clean_`year'", replace
+    save "Input/Sales/Sales_Clean_`year'", replace
 
 }
 
 clear
 forvalues year = 2010/2020 {
 
-    append using "${Input}/State Data/State_Tax_Data/Sales/Sales_Clean_`year'"
+    append using "Input/Sales/Sales_Clean_`year'"
 
 }
 
@@ -778,7 +773,7 @@ replace Sales_Rate_Adj = Sales_Rate + 0.60 if State == "New Hampshire" & year ==
 
 ********************************************************************************
 
-save "${Input}/State Data/State_Tax_Data/Sales/Sales_Clean", replace
+save "Input/Sales/Sales_Clean", replace
 
 ********************************************************************************
 
@@ -787,12 +782,12 @@ save "${Input}/State Data/State_Tax_Data/Sales/Sales_Clean", replace
 ********************************************************************************
 
 *Create a big tax dataset with all the types together
-use "${Input}/State Data/State_Tax_Data/Corporate/Corp_Clean", clear
+use "Input/Corporate/Corp_Clean", clear
 
-merge 1:1 year State using "${Input}/State Data/State_Tax_Data/Personal/Pers_Clean"
+merge 1:1 year State using "Input/Personal/Pers_Clean"
 drop _m
 
-merge 1:1 year State using "${Input}/State Data/State_Tax_Data/Sales/Sales_Clean"
+merge 1:1 year State using "Input/Sales/Sales_Clean"
 drop _m
 
 drop if missing(State)
@@ -807,7 +802,7 @@ label var Pers_Rate_Adj "Personal Income Tax Rate, Tax Foundation Data"
 label var Sales_Rate "Sales Tax Rate"
 label var Sales_Rate_Adj "Adjusted Sales Tax Rate"
 
-save "${Input}/State Data/State_Tax_Data/State_Taxes", replace
+save "State_Taxes", replace
 
 ********************************************************************************
 

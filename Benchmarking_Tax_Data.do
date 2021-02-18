@@ -8,18 +8,13 @@
 
 ********************************************************************************
 
-*Import paths globals
-do "../../Prelim.do"
-
-********************************************************************************
-
 *Internal Benchmarks
 
 *Append together all Tax Foundation Personal Files
 clear
 forvalues year = 2010/2020 {
 
-    append using "${Input}/State_Tax_Data/Personal/Pers_Clean_`year'"
+    append using "Input/Personal/Pers_Clean_`year'"
 
     replace year = `year' if missing(year)
 
@@ -30,7 +25,7 @@ rename Pers_Rate Pers_Rate_TF
 
 *merge in NBER data
 *Keep only matched years for the comparison
-merge 1:1 year State using "${Input}/State_Tax_Data/Personal/NBER_Clean"
+merge 1:1 year State using "Input/Personal/NBER_Clean"
 keep if _m == 3
 drop _m
 
@@ -46,7 +41,7 @@ histogram diff_Pers_Rate
 
 order State year Pers_Rate_NBER Pers_Rate_TF diff_Pers_Rate
 
-save "${Input}/State_Tax_Data/Personal/TF_vs_NBER_Pers_Rate", replace
+save "Input/Personal/TF_vs_NBER_Pers_Rate", replace
 
 stop
 
@@ -55,13 +50,13 @@ stop
 *External Benchmarks
 
 *Load Giroud's data
-use state_name year cit sal pinc using "${Input}/State_Tax_Data/stata_tax_data", clear
+use state_name year cit sal pinc using "Input/Giroud_Rauh_2019/stata_tax_data", clear
 
 rename state_name State
 
 keep if year >= 2010
 
-merge 1:1 year State using "${Input}/State_Tax_Data/State_Taxes"
+merge 1:1 year State using "Input/State_Taxes"
 keep if _m == 3
 drop _m
 
@@ -83,4 +78,4 @@ foreach tax_type in Corp Pers Sales {
 
 order State year cit Corp_Rate Corp_Diff Corp_Rate_Adj Corp_Diff_Adj pinc Pers_Rate Pers_Diff sal Sales_Rate Sales_Diff Sales_Rate_Adj Sales_Diff_Adj
 
-save "${Input}/State_Tax_Data/Diff_w_Giroud", replace
+save "Input/Giroud_Rauh_2019/Diff_w_Giroud", replace

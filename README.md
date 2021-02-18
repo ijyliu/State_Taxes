@@ -1,8 +1,12 @@
-# Taxes README.md
+# State_Taxes
 
-The main data file containing tax data is State_Taxes.dta.
+The main data file of 2010-2020 state corporate, personal, and sales taxes with unadjusted and adjusted rates is [State_Taxes.dta](State_Taxes.dta). It is produced by [Process_State_Taxes.do](Process_State_Taxes.do).
 
-The main cleaning file is Process_State_Local_Taxes.do.
+Also included in the "Input" folder are several files from [Giroud & Rauh (2019)](http://www.columbia.edu/~xg2285/Taxes.pdf) which can be downloaded [here](http://www.columbia.edu/~xg2285/).
+
+[Benchmarking_Tax_Data.do](Benchmarking_Tax_Data.do) performs an internal comparison of the NBER and Tax Foundation personal income tax rates and and external comparison of this project's rates with those from Giroud & Rauh (2019) for overlapping years.
+
+[State_Names.dta](State_Names.dta) is a convenient mapping between various naming conventions in Tax Foundation data.
 
 ## Data Sources
 
