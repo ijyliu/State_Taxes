@@ -6,8 +6,6 @@ Also included in the "Input" folder are several files from [Giroud & Rauh (2019)
 
 [Benchmarking_Tax_Data.do](Benchmarking_Tax_Data.do) performs an internal comparison of the NBER and Tax Foundation personal income tax rates and and external comparison of this project's rates with those from Giroud & Rauh (2019) for overlapping years.
 
-[State_Names.dta](State_Names.dta) is a convenient mapping between various naming conventions in Tax Foundation data.
-
 ## Data Sources
 
 ### Corporate Income Taxes
