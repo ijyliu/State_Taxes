@@ -10,7 +10,7 @@ Also included in the "Input" folder are several files from [Giroud & Rauh (2019)
 
 ### Corporate Income Taxes
 
-Initial data for the variable "Corp_Rate" comes from the Tax Foundation.
+Initial data for the variable "Corp_Rate" comes from the Tax Policy Foundation.
 
 * 2010-2020:
   https://www.taxpolicycenter.org/statistics/state-corporate-income-tax-rates
@@ -23,7 +23,7 @@ Initial data for the variable "Pers_Rate" comes from NBER Taxsim (2010-2018) and
 
 * 2010-2018:
   http://users.nber.org/~taxsim/state-rates/maxrate.html
-* 2018-2020:
+* 2018-2020 (the file also contains 2015-2017 data):
   https://taxfoundation.org/state-individual-income-tax-rates-and-brackets-for-2020/
 
 For the variable "Pers_Rate_Adj", Tax Foundation data is used for the entire period 2010-2020.
