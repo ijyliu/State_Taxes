@@ -43,8 +43,6 @@ order State year Pers_Rate_NBER Pers_Rate_TF diff_Pers_Rate
 
 save "Input/Personal/TF_vs_NBER_Pers_Rate", replace
 
-stop
-
 ********************************************************************************
 
 *External Benchmarks
@@ -56,7 +54,7 @@ rename state_name State
 
 keep if year >= 2010
 
-merge 1:1 year State using "Input/State_Taxes"
+merge 1:1 year State using "State_Taxes"
 keep if _m == 3
 drop _m
 

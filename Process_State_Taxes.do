@@ -819,10 +819,10 @@ foreach tax_type in Corp Pers Sales {
 	
 	*histogram changes
 	histogram change_`tax_type'
-	save_figure "${Figures}/changes_`tax_type'"
+	*you can save a figure here
 	
 	histogram change_`tax_type'_Adj
-	save_figure "${Figures}/changes_`tax_type'_Adj"
+	*you can save a figure here
 
 	*list (table for now) of changes
 	tab change_`tax_type' if (change_`tax_type' != 0 & !missing(change_`tax_type'))
