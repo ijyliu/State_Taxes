@@ -10,7 +10,7 @@ Also included in the "Input" folder are several files from [Giroud & Rauh (2019)
 
 ### Corporate Income Taxes
 
-Initial data for the variable "Corp_Rate" comes from the Tax Policy Foundation.
+Initial data for the variable "Corp_Rate" comes from the Tax Policy Center.
 
 * 2010-2020:
   https://www.taxpolicycenter.org/statistics/state-corporate-income-tax-rates
