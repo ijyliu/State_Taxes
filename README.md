@@ -1,6 +1,6 @@
 # State_Taxes
 
-The main data files of 2010-2020 state corporate, personal, and sales taxes with unadjusted and adjusted rates are [State_Taxes.dta](State_Taxes.dta) in Stata dta format, and [State_Taxes.csv](State_Taxes.csv), which is the same, but converted to a csv file. The dta is produced by [Process_State_Taxes.do](Process_State_Taxes.do) and [Convert_State_Taxes_To_CSV.R](Convert_State_Taxes_To_CSV.R) handles the conversion to csv.
+The main data files of 2010-2020 top state corporate, personal, and sales tax rates are [State_Taxes.dta](State_Taxes.dta) in Stata dta format, and [State_Taxes.csv](State_Taxes.csv), which is the same, but converted to a csv file. The dta is produced by [Process_State_Taxes.do](Process_State_Taxes.do) and [Convert_State_Taxes_To_CSV.R](Convert_State_Taxes_To_CSV.R) handles the conversion to csv.
 
 Also included in the "Input" folder are several files from [Giroud & Rauh (2019)](http://www.columbia.edu/~xg2285/Taxes.pdf) which can be downloaded [here](http://www.columbia.edu/~xg2285/).
 
@@ -8,7 +8,7 @@ Also included in the "Input" folder are several files from [Giroud & Rauh (2019)
 
 ## Data Sources
 
-### Corporate Income Taxes
+### Corporate Income Taxes (Top/Max Rate)
 
 Initial data for the variable "Corp_Rate" comes from the Tax Policy Center.
 
@@ -17,7 +17,7 @@ Initial data for the variable "Corp_Rate" comes from the Tax Policy Center.
 
 For the variable "Corp_Rate_Adj", various adjustments are made for items such as temporary surtaxes and surcharges and accounting methods; these adjustments are detailed in the code, along with links to sources.
 
-### Personal Income Taxes
+### Personal Income Taxes (Top/Max Rate)
 
 Initial data for the variable "Pers_Rate" comes from NBER Taxsim (2010-2018) and the Tax Foundation (2019-2020).
 
