@@ -1,6 +1,6 @@
 # State_Taxes
 
-The main data files of 2010-2020 state corporate (top/max), personal (top/max), and sales tax rates are [State_Taxes.dta](State_Taxes.dta) in Stata dta format, and [State_Taxes.csv](State_Taxes.csv), which is the same, but converted to a csv file. The dta is produced by [Process_State_Taxes.do](Process_State_Taxes.do) and [Convert_State_Taxes_To_CSV.R](Convert_State_Taxes_To_CSV.R) handles the conversion to csv.
+The main data files of 2010-2020 US state + DC corporate (top/max), personal (top/max), and sales tax rates are [State_Taxes.dta](State_Taxes.dta) in Stata dta format, and [State_Taxes.csv](State_Taxes.csv), which is the same, but converted to a csv file. The dta is produced by [Process_State_Taxes.do](Process_State_Taxes.do) and [Convert_State_Taxes_To_CSV.R](Convert_State_Taxes_To_CSV.R) handles the conversion to csv.
 
 Also included in the "Input" folder are several files from [Giroud & Rauh (2019)](http://www.columbia.edu/~xg2285/Taxes.pdf) which can be downloaded [here](http://www.columbia.edu/~xg2285/).
 
