@@ -11,4 +11,4 @@ tax_data <- dplyr::transmute(tax_data, year, State, Corp_Rate, Corp_Rate_Adj, Pe
 print(tax_data)
 
 # Write data
-write.csv(tax_data, 'State_Taxes.csv')
+write.csv(tax_data, 'State_Taxes.csv', row.names = FALSE)
